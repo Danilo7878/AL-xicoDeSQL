@@ -6,6 +6,8 @@
 package AnalizadorLexico;
 
 import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -16,6 +18,8 @@ public class MiniSQL extends javax.swing.JFrame {
     /**
      * Creates new form MiniSQL
      */
+    String PathSQL = "";
+    
     public MiniSQL() {
         initComponents();
     }
@@ -55,6 +59,11 @@ public class MiniSQL extends javax.swing.JFrame {
         btn_elegirArchivo.setFont(new java.awt.Font("Tempus Sans ITC", 0, 12)); // NOI18N
         btn_elegirArchivo.setForeground(new java.awt.Color(255, 255, 255));
         btn_elegirArchivo.setText("Examinar");
+        btn_elegirArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_elegirArchivoActionPerformed(evt);
+            }
+        });
 
         txt_ChosenPath.setEditable(false);
         txt_ChosenPath.setFont(new java.awt.Font("Tempus Sans ITC", 0, 10)); // NOI18N
@@ -82,24 +91,25 @@ public class MiniSQL extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_elegirArchivo))))
-                .addGap(61, 61, 61))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_elegirArchivo)))
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_elegirArchivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
@@ -135,6 +145,19 @@ public class MiniSQL extends javax.swing.JFrame {
             //mostrar mensaje de que no se encuentra el archivo Lexer.flex
         }              
     }//GEN-LAST:event_btn_inicioActionPerformed
+
+    private void btn_elegirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_elegirArchivoActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jf = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo Mini-SQL", "sql", "sql");
+        jf.setFileFilter(filter);
+        int r = jf.showOpenDialog(null);
+        if(r==JFileChooser.APPROVE_OPTION){
+            File f = jf.getSelectedFile();
+            PathSQL = f.getAbsolutePath();
+            txt_ChosenPath.setText(PathSQL);
+        }
+    }//GEN-LAST:event_btn_elegirArchivoActionPerformed
 
     /**
      * @param args the command line arguments
