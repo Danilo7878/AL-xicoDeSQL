@@ -22,6 +22,7 @@ public class MiniSQL extends javax.swing.JFrame {
     
     public MiniSQL() {
         initComponents();
+        //btn_Escanear.setVisible(false);
     }
 
     /**
@@ -33,27 +34,15 @@ public class MiniSQL extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_inicio = new javax.swing.JButton();
         btn_elegirArchivo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_ChosenPath = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_Escanear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtArea_Errores = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btn_inicio.setBackground(new java.awt.Color(0, 153, 0));
-        btn_inicio.setFont(new java.awt.Font("Segoe WP SemiLight", 1, 14)); // NOI18N
-        btn_inicio.setText("Generar escáner");
-        btn_inicio.setToolTipText("Genera el escáner e inicia el programa");
-        btn_inicio.setName(""); // NOI18N
-        btn_inicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_inicioActionPerformed(evt);
-            }
-        });
 
         btn_elegirArchivo.setBackground(new java.awt.Color(0, 0, 0));
         btn_elegirArchivo.setFont(new java.awt.Font("Tempus Sans ITC", 0, 12)); // NOI18N
@@ -72,79 +61,61 @@ public class MiniSQL extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 10)); // NOI18N
         jLabel1.setText("elegir archivo con código Mini-SQL");
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 51));
-        jButton1.setFont(new java.awt.Font("Segoe WP SemiLight", 1, 11)); // NOI18N
-        jButton1.setText("Escanear");
+        btn_Escanear.setBackground(new java.awt.Color(0, 153, 51));
+        btn_Escanear.setFont(new java.awt.Font("Segoe WP SemiLight", 1, 11)); // NOI18N
+        btn_Escanear.setText("Escanear");
+        btn_Escanear.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                btn_EscanearFocusGained(evt);
+            }
+        });
+        btn_Escanear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EscanearActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtArea_Errores.setColumns(20);
+        txtArea_Errores.setRows(5);
+        jScrollPane2.setViewportView(txtArea_Errores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addComponent(btn_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+                .addContainerGap(68, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_elegirArchivo)))
-                .addGap(57, 57, 57))
+                        .addComponent(btn_elegirArchivo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(btn_Escanear, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_elegirArchivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addGap(55, 55, 55)
-                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(btn_Escanear)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inicioActionPerformed
-        // TODO add your handling code here:
-        File rootDir = new File("");
-        String path = rootDir.getAbsolutePath();
-        String Verificar = path.concat("src/AnalizadorLexico/Lexer.flex");
-        path = path.concat("src/AnalizadorLexico/Lexer.flex");
-        File archivoVerificar = new File(Verificar);
-        File archivo = new File(path);
-        
-        if (archivo.exists()) {
-            if (archivoVerificar.exists()) {
-                //mostrar mensaje de que ya existe el escáner               
-            }
-            else{
-                jflex.Main.generate(archivo);
-                //ocultar botón de inicio y mostrar el resto de los elementos del form
-            }
-        }
-        else{
-            //mostrar mensaje de que no se encuentra el archivo Lexer.flex
-        }              
-    }//GEN-LAST:event_btn_inicioActionPerformed
 
     private void btn_elegirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_elegirArchivoActionPerformed
         // TODO add your handling code here:
@@ -156,52 +127,31 @@ public class MiniSQL extends javax.swing.JFrame {
             File f = jf.getSelectedFile();
             PathSQL = f.getAbsolutePath();
             txt_ChosenPath.setText(PathSQL);
+            btn_Escanear.setVisible(true);
         }
     }//GEN-LAST:event_btn_elegirArchivoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MiniSQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MiniSQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MiniSQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MiniSQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btn_EscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EscanearActionPerformed
+        // TODO add your handling code here:
+        //btn_Escanear.setVisible(false);
+        txtArea_Errores.setText("");
+        
+    }//GEN-LAST:event_btn_EscanearActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MiniSQL().setVisible(true);
-            }
-        });
-    }
+    private void btn_EscanearFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_EscanearFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_EscanearFocusGained
+
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Escanear;
     private javax.swing.JButton btn_elegirArchivo;
-    private javax.swing.JButton btn_inicio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtArea_Errores;
     private javax.swing.JTextPane txt_ChosenPath;
     // End of variables declaration//GEN-END:variables
 }

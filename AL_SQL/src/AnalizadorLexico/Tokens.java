@@ -10,5 +10,7 @@ package AnalizadorLexico;
  * @author danil
  */
 public enum Tokens {
-    
+    Palabra_Reservada,
+    Identificador,
+    ERROR
 }
