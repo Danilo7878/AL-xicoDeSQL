@@ -1377,7 +1377,7 @@ public int UltimaColumna;
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { return ERROR;
+            { lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ERROR;
             } 
             // fall through
           case 15: break;

@@ -226,8 +226,10 @@ public class MiniSQL extends javax.swing.JFrame {
                         errores+= "ERROR: Comentario Multilinea sin cerrar|Linea Inicial: " + lexer.linea+"\n";
                         break;
                     case ERROR:
-                        escribir.println("ERROR: cadena no válida en el lenguaje");
-                        errores+= "ERROR: cadena no válida en el lenguaje\n";
+                        escribir.println("ERROR: cadena no reconocida|Valor: "+lexer.lexeme+"|Linea: "+lexer.linea
+                        +"|Columna Inicio: "+lexer.PrimeraColumna+"|Columna Fin: "+lexer.UltimaColumna);
+                        errores+= "ERROR: cadena no reconocida|Valor: "+lexer.lexeme+"|Linea: "+lexer.linea
+                                +"|Columna Inicio: "+lexer.PrimeraColumna+"|Columna Fin: "+lexer.UltimaColumna+"\n";
                         break;
                     default:
                         throw new AssertionError();
