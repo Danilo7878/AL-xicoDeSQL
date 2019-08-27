@@ -25,11 +25,12 @@ OperadorLogico = "<"|"<="|">"|">="|"=="|"!="|"&&"|"||"
 SignoDePuntuacion = "!"|";"|","|"."
 OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
 Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
-ComentarioSimple = ("--")[^\r\n]*
+ComentarioSimple = ("--")[^\r\n]*([\r\n]?)
 ComentarioMultilinea = "/*"~"*/"
 ComentarioMultilineaError = "/*"
-StringError = ("'")[^\r\n]*
-String = "'"~("'\n"|"'\r"|"'\r\n")
+String = ("'")[^\r\n]*("'")
+StringError = ("'")[^'\r\n]*([\r\n]?)
+
 
 %{
 public String lexeme;
@@ -112,8 +113,9 @@ EXCEPTION {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn +1; Ultima
 {FloatError1} | {FloatError2} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return FloatError;}
 {Simbolo} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Simbolo;} 
 {ComentarioSimple} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ComentarioSimple;}
-{StringError} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return StringError;}
 {String} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return String;}
+{StringError} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return StringError;}
+
 {ComentarioMultilinea} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ComentarioMultilinea;}
 {ComentarioMultilineaError} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ComentarioMultilineaError;}
  . {return ERROR;}
