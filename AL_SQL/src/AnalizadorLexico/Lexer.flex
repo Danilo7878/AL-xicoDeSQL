@@ -26,6 +26,8 @@ SignoDePuntuacion = "!"|";"|","|"."
 OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
 Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
 ComentarioSimple = ("--")[^\r\n]*
+StringError = ("'")[^\r\n]+
+String = ("'")[^\r\n]*("'")
 
 %{
 public String lexeme;
@@ -102,17 +104,12 @@ END-EXEC | ORDER | WRITE | ESCAPE | OUTER | YEAR | EXCEPT | OUTPUT | ZONE |
 EXCEPTION {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn +1; UltimaColumna=yycolumn+yylength(); return Palabra_Reservada;}
 
 {Identificador} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn +1 ; UltimaColumna=yycolumn+yylength(); return Identificador;}
-
 {Bit} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Bit;}
-
 {Digito} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Int;}
-
 {Float} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Float;}
-
 {FloatError1} | {FloatError2} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return FloatError;}
-
-{Simbolo} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Simbolo;}
- 
+{Simbolo} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Simbolo;} 
 {ComentarioSimple} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ComentarioSimple;}
-
+{StringError} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return StringError;}
+{String} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return String;}
  . {return ERROR;}

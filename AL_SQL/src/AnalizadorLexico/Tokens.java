@@ -18,5 +18,7 @@ public enum Tokens {
     FloatError,
     Simbolo,
     ComentarioSimple,
+    String,
+    StringError,
     ERROR
 }
