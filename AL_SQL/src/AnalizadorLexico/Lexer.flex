@@ -26,8 +26,8 @@ SignoDePuntuacion = "!"|";"|","|"."
 OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
 Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
 ComentarioSimple = ("--")[^\r\n]*
-StringError = ("'")[^\r\n]+
-String = ("'")[^\r\n]*("'")
+StringError = ("'")[^\r\n]*
+String = "'"~("'\n"|"'\r"|"'\r\n")
 
 %{
 public String lexeme;

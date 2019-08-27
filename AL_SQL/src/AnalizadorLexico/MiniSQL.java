@@ -174,7 +174,7 @@ public class MiniSQL extends javax.swing.JFrame {
                 
                 //seleccionar el tipo de Token
                 switch (token) {
-                    case Palabra_Reservada: case Float: case Bit: case Int: case Simbolo: case ComentarioSimple: case String:
+                    case Palabra_Reservada: case Float: case Bit: case Int: case Simbolo: case ComentarioSimple:
                         escribir.println("Token: "+ token+ "|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
                         + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna);
                         break;
@@ -207,6 +207,12 @@ public class MiniSQL extends javax.swing.JFrame {
                         
                         errores+= "STRING ERROR: Falta <'> o se encontró un salto de linea|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
                                   + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna + "\n";
+                        break;
+                    case String:
+                        String quitarSalto = lexer.lexeme.replaceAll("\n", "");
+                        quitarSalto = quitarSalto.replaceAll("\r", "");
+                        escribir.println("Token: "+ token+ "|Valor: " + quitarSalto + "|Linea: " + lexer.linea
+                        + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna);
                         break;
                     case ERROR:
                         escribir.println("ERROR: cadena no válida en el lenguaje");
