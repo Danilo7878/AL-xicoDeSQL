@@ -16,5 +16,6 @@ public enum Tokens {
     Int,
     Float,
     FloatError,
+    Simbolo,
     ERROR
 }

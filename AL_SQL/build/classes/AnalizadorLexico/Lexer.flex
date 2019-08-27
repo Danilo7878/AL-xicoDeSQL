@@ -7,17 +7,26 @@ import static AnalizadorLexico.Tokens.*;
 %line
 %column
 
-Letra=[a-zA-Z]+
+Letra = [a-zA-Z]+
 LetraOguion = [a-zA-Z_]+
-Digito=[0-9]+
-espacio=[ ,\t,\r,\n]+
-Exponente=[eE]
-Bit=[0-1]|"NULL"
-Signo= [+-]?
+Digito = [0-9]+
+espacio = [ ,\t,\r,\n]+
+FinDeLinea = [\r,\n]+ 
+Exponente = [eE]
+Bit = [0-1]|"NULL"
+Signo = [+-]?
 Decimal = {Digito}\.{Digito}*
 NoDecimal = \.{Digito}+
+Identificador = {Letra} ({LetraOguion} | {Digito})*
+Float = {Signo} {Decimal} ({Exponente} {Signo} {Digito})?
+FloatError1 = {Signo} {NoDecimal} ({Exponente} {Signo} {Digito})?
+FloatError2 = {Signo} {Decimal} ({Exponente} {Signo}) | {Signo} {NoDecimal} ({Exponente} {Signo})
+OperadorAritmetico = "+"|"-"|"*"|"/"|"%"|"="
+OperadorLogico = "<"|"<="|">"|">="|"=="|"!="|"&&"|"||"
+SignoDePuntuacion = "!"|";"|","|"."
+OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
+Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
 
- 
 
 %{
 public String lexeme;
@@ -93,14 +102,15 @@ DROP | OPEN | WHERE | ELSE | OPTION | WITH | END | OR | WORK |
 END-EXEC | ORDER | WRITE | ESCAPE | OUTER | YEAR | EXCEPT | OUTPUT | ZONE |
 EXCEPTION {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Palabra_Reservada;}
 
-{Letra} ({LetraOguion} | {Digito})* {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Identificador;}
+{Identificador} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Identificador;}
 
 {Bit} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Bit;}
 
 {Digito} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Int;}
 
-{Signo} {Decimal} ({Exponente} {Signo} {Digito})? {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Float;}
+{Float} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Float;}
 
-{Signo} {NoDecimal} ({Exponente} {Signo} {Digito})? {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return FloatError;}
- 
+{FloatError1} | {FloatError2} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return FloatError;}
+
+{Simbolo} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Simbolo;} 
  . {return ERROR;}

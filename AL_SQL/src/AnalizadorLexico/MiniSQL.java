@@ -170,7 +170,7 @@ public class MiniSQL extends javax.swing.JFrame {
                 
                 //seleccionar el tipo de Token
                 switch (token) {
-                    case Palabra_Reservada: case Float: case Bit: case Int:
+                    case Palabra_Reservada: case Float: case Bit: case Int: case Simbolo:
                         escribir.println("Token: "+ token+ "|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
                         + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna);
                         break;
