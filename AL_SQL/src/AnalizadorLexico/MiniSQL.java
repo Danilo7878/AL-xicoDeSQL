@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -149,18 +150,12 @@ public class MiniSQL extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_elegirArchivoActionPerformed
 
     private void btn_EscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EscanearActionPerformed
-        // TODO add your handling code here:
-        //btn_Escanear.setVisible(false);
         txtArea_Errores.setText("");
-        
-    }//GEN-LAST:event_btn_EscanearActionPerformed
-
-    private void btn_EscanearFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_EscanearFocusGained
         try {
             // TODO add your handling code here:
             Reader escanear = new BufferedReader(new FileReader(PathSQL));
             Lexer lexer = new Lexer(escanear);
-            String[] fichero_extension = PathSQL.split(".");
+            String[] fichero_extension = PathSQL.split(Pattern.quote("."));
             String NewPath = fichero_extension[0].concat(".out");
             PrintWriter escribir = new PrintWriter(new File(NewPath));
             
@@ -175,12 +170,29 @@ public class MiniSQL extends javax.swing.JFrame {
                 
                 //seleccionar el tipo de Token
                 switch (token) {
-                    case Palabra_Reservada:
-                        
+                    case Palabra_Reservada: case Float: case Bit: case Int:
+                        escribir.println("Token: "+ token+ "|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
+                        + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna);
                         break;
                     case Identificador:
+                        if (lexer.yylength() > 31) {
+                            String TokenTruncado = lexer.lexeme.substring(0, 30);
+                            escribir.println("Token: "+ token+ "|Valor: " + TokenTruncado + "|Linea: " + lexer.linea
+                            + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna 
+                            + "|ALERTA: Indentificador Truncado");
+                        }
+                        else{
+                        escribir.println("Token: "+ token+ "|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
+                        + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna);
+                        }
                         break;
-                        
+                    case FloatError:
+                        escribir.println("FLOAT ERROR: cadena no válida para el tipo de dato|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
+                        + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna);
+                        break;
+                    case ERROR:
+                        escribir.println("ERROR: cadena no válida en el lenguaje");
+                        break;
                     default:
                         throw new AssertionError();
                 }
@@ -192,6 +204,10 @@ public class MiniSQL extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MiniSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_btn_EscanearActionPerformed
+
+    private void btn_EscanearFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_EscanearFocusGained
+    
     }//GEN-LAST:event_btn_EscanearFocusGained
 
     

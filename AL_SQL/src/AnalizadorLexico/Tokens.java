@@ -12,5 +12,9 @@ package AnalizadorLexico;
 public enum Tokens {
     Palabra_Reservada,
     Identificador,
+    Bit,
+    Int,
+    Float,
+    FloatError,
     ERROR
 }

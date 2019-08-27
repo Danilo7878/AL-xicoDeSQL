@@ -7,12 +7,17 @@ import static AnalizadorLexico.Tokens.*;
 %line
 %column
 
-Letra=[a-zA-Z_]+
+Letra=[a-zA-Z]+
+LetraOguion = [a-zA-Z_]+
 Digito=[0-9]+
 espacio=[ ,\t,\r,\n]+
 Exponente=[eE]
- 
+Bit=[0-1]|"NULL"
+Signo= [+-]?
+Decimal = {Digito}\.{Digito}*
+NoDecimal = \.{Digito}+
 
+ 
 
 %{
 public String lexeme;
@@ -88,5 +93,14 @@ DROP | OPEN | WHERE | ELSE | OPTION | WITH | END | OR | WORK |
 END-EXEC | ORDER | WRITE | ESCAPE | OUTER | YEAR | EXCEPT | OUTPUT | ZONE |
 EXCEPTION {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Palabra_Reservada;}
 
-{Letra} ({Letra} | {Digito})* {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Identificador;}
+{Letra} ({LetraOguion} | {Digito})* {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Identificador;}
+
+{Bit} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Bit;}
+
+{Digito} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Int;}
+
+{Signo} {Decimal} ({Exponente} {Signo} {Digito})? {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Float;}
+
+{Signo} {NoDecimal} ({Exponente} {Signo} {Digito})? {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return FloatError;}
+ 
  . {return ERROR;}

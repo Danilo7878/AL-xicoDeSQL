@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class AL_SQL_Main {
     public static void main(String[] args) {
-         File rootDir = new File("");
+        File rootDir = new File("");
         String path = rootDir.getAbsolutePath();        
         path = path.concat("/src/AnalizadorLexico/Lexer.flex");
         File archivo = new File(path);                     
