@@ -5,7 +5,14 @@
  */
 package AnalizadorLexico;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -41,6 +48,7 @@ public class MiniSQL extends javax.swing.JFrame {
         btn_Escanear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtArea_Errores = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,9 +83,13 @@ public class MiniSQL extends javax.swing.JFrame {
             }
         });
 
+        txtArea_Errores.setEditable(false);
         txtArea_Errores.setColumns(20);
         txtArea_Errores.setRows(5);
         jScrollPane2.setViewportView(txtArea_Errores);
+
+        jLabel2.setFont(new java.awt.Font("Kristen ITC", 1, 14)); // NOI18N
+        jLabel2.setText("Analizador de Léxico Mini-SQL");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,27 +99,31 @@ public class MiniSQL extends javax.swing.JFrame {
                 .addContainerGap(68, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_elegirArchivo))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(btn_Escanear, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_elegirArchivo)))
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_elegirArchivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                 .addComponent(btn_Escanear)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,7 +155,36 @@ public class MiniSQL extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_EscanearActionPerformed
 
     private void btn_EscanearFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_EscanearFocusGained
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Reader escanear = new BufferedReader(new FileReader(PathSQL));
+            Lexer lexer = new Lexer(escanear);
+            
+            while (true) {
+            Tokens token = lexer.yylex();
+                if (token == null) {
+                    return;
+                    //cerrar el archivo.out
+                }
+                
+                //seleccionar el tipo de Token
+                switch (token) {
+                    case Palabra_Reservada:
+                        
+                        break;
+                    case Identificador:
+                        break;
+                        
+                    default:
+                        throw new AssertionError();
+                }
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MiniSQL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MiniSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_EscanearFocusGained
 
     
@@ -149,6 +194,7 @@ public class MiniSQL extends javax.swing.JFrame {
     private javax.swing.JButton btn_Escanear;
     private javax.swing.JButton btn_elegirArchivo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea txtArea_Errores;

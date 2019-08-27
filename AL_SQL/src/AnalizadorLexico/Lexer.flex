@@ -87,5 +87,5 @@ DROP | OPEN | WHERE | ELSE | OPTION | WITH | END | OR | WORK |
 END-EXEC | ORDER | WRITE | ESCAPE | OUTER | YEAR | EXCEPT | OUTPUT | ZONE |
 EXCEPTION {lexeme=yytext(); linea=yyline; columna=yycolumn; return Palabra_Reservada;}
 
-{Letra} ({Letra} | {Digito})* {lexeme=yytext();   return Identificador;}
+{Letra} ({Letra} | {Digito})* {lexeme=yytext(); linea=yyline; columna=yycolumn; return Identificador;}
  . {return ERROR;}
