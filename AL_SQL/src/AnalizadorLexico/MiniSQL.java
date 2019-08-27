@@ -32,7 +32,7 @@ public class MiniSQL extends javax.swing.JFrame {
     
     public MiniSQL() {
         initComponents();
-        txtArea_Errores.setForeground(Color.red);
+        txtArea_Errores.setForeground(Color.RED);
     }
 
     /**
@@ -168,7 +168,8 @@ public class MiniSQL extends javax.swing.JFrame {
                     //cerrar el archivo.out 
                     txtArea_Errores.setText(errores);
                     escribir.flush();
-                    escribir.close();
+                    escribir.close();                    
+                    txtArea_Errores.append("\nPara mayor información consulte el archivo --> " + NewPath);
                     return;                                     
                 }
                 
