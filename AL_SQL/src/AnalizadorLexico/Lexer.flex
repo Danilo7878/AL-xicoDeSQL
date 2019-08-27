@@ -17,7 +17,8 @@ Exponente=[eE]
 %{
 public String lexeme;
 public int linea;
-public int columna;
+public int PrimeraColumna;
+public int UltimaColumna;
 %}
 
 %%
@@ -85,7 +86,7 @@ DIAGNOSTICS | NUMERIC | VARCHAR | DISCONNECT | OCTET_LENGTH | VARYING |
 DISTINCT | OF | VIEW | DOMAIN | ON | WHEN | DOUBLE | ONLY | WHENEVER |
 DROP | OPEN | WHERE | ELSE | OPTION | WITH | END | OR | WORK |
 END-EXEC | ORDER | WRITE | ESCAPE | OUTER | YEAR | EXCEPT | OUTPUT | ZONE |
-EXCEPTION {lexeme=yytext(); linea=yyline; columna=yycolumn; return Palabra_Reservada;}
+EXCEPTION {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Palabra_Reservada;}
 
-{Letra} ({Letra} | {Digito})* {lexeme=yytext(); linea=yyline; columna=yycolumn; return Identificador;}
+{Letra} ({Letra} | {Digito})* {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Identificador;}
  . {return ERROR;}

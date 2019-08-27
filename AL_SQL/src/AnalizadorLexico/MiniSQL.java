@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -159,12 +160,17 @@ public class MiniSQL extends javax.swing.JFrame {
             // TODO add your handling code here:
             Reader escanear = new BufferedReader(new FileReader(PathSQL));
             Lexer lexer = new Lexer(escanear);
+            String[] fichero_extension = PathSQL.split(".");
+            String NewPath = fichero_extension[0].concat(".out");
+            PrintWriter escribir = new PrintWriter(new File(NewPath));
             
             while (true) {
             Tokens token = lexer.yylex();
                 if (token == null) {
-                    return;
-                    //cerrar el archivo.out
+                    //cerrar el archivo.out   
+                    escribir.flush();
+                    escribir.close();
+                    return;                                     
                 }
                 
                 //seleccionar el tipo de Token
@@ -179,6 +185,7 @@ public class MiniSQL extends javax.swing.JFrame {
                         throw new AssertionError();
                 }
             }
+                        
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MiniSQL.class.getName()).log(Level.SEVERE, null, ex);

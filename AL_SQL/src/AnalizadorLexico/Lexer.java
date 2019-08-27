@@ -827,7 +827,8 @@ class Lexer {
   /* user code: */
 public String lexeme;
 public int linea;
-public int columna;
+public int PrimeraColumna;
+public int UltimaColumna;
 
 
   /**
@@ -1206,7 +1207,7 @@ public int columna;
             // fall through
           case 5: break;
           case 2: 
-            { lexeme=yytext();   return Identificador;
+            { lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Identificador;
             } 
             // fall through
           case 6: break;
@@ -1216,7 +1217,7 @@ public int columna;
             // fall through
           case 7: break;
           case 4: 
-            { lexeme=yytext(); linea=yyline; columna=yycolumn; return Palabra_Reservada;
+            { lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Palabra_Reservada;
             } 
             // fall through
           case 8: break;
