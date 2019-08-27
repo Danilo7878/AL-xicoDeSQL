@@ -20,5 +20,6 @@ public enum Tokens {
     ComentarioSimple,
     String,
     StringError,
+    ComentarioMultilinea,
     ERROR
 }

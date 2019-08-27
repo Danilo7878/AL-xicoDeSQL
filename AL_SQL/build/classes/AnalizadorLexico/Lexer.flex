@@ -26,6 +26,7 @@ SignoDePuntuacion = "!"|";"|","|"."
 OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
 Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
 ComentarioSimple = ("--")[^\r\n]*
+ComentarioMultilinea = "/*"~"*/"
 StringError = ("'")[^\r\n]*
 String = "'"~("'\n"|"'\r"|"'\r\n")
 
@@ -112,4 +113,5 @@ EXCEPTION {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn +1; Ultima
 {ComentarioSimple} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ComentarioSimple;}
 {StringError} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return StringError;}
 {String} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return String;}
+{ComentarioMultilinea} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ComentarioMultilinea;}
  . {return ERROR;}
