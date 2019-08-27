@@ -146,12 +146,13 @@ public class MiniSQL extends javax.swing.JFrame {
             File f = jf.getSelectedFile();
             PathSQL = f.getAbsolutePath();
             txt_ChosenPath.setText(PathSQL);
-            btn_Escanear.setVisible(true);
+            txtArea_Errores.setText("");
         }
     }//GEN-LAST:event_btn_elegirArchivoActionPerformed
 
     private void btn_EscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EscanearActionPerformed
-        txtArea_Errores.setText("");
+    txtArea_Errores.setText("");
+    if (!PathSQL.equals("")){
         try {
             // TODO add your handling code here:
             Reader escanear = new BufferedReader(new FileReader(PathSQL));
@@ -214,6 +215,10 @@ public class MiniSQL extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MiniSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    else{
+        txtArea_Errores.setText("ALERTA: No se ha seleccionado un Archivo aún");
+    }
     }//GEN-LAST:event_btn_EscanearActionPerformed
 
     private void btn_EscanearFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_EscanearFocusGained
