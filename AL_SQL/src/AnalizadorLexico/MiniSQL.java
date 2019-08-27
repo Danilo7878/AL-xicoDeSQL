@@ -180,14 +180,14 @@ public class MiniSQL extends javax.swing.JFrame {
                         + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna);
                         break;
                     case ComentarioSimple:
-                        escribir.println("Token: "+token+"Linea: "+lexer.linea);
+                        escribir.println("Token: "+token+"|Linea: "+lexer.linea);
                         break;                        
                     case ComentarioMultilinea:
-                        escribir.println("Token: "+token+"Linea Inicial: "+lexer.linea);
+                        escribir.println("Token: "+token+"|Linea Inicial: "+lexer.linea);
                         break;
                     case Identificador:
                         if (lexer.yylength() > 31) {
-                            String TokenTruncado = lexer.lexeme.substring(0, 30);
+                            String TokenTruncado = lexer.lexeme.substring(0, 31);
                             
                             escribir.println("Token: "+ token+ "|Valor: " + TokenTruncado + "|Linea: " + lexer.linea
                             + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna 

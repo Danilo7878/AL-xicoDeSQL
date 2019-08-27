@@ -25,11 +25,11 @@ OperadorLogico = "<"|"<="|">"|">="|"=="|"!="|"&&"|"||"
 SignoDePuntuacion = "!"|";"|","|"."
 OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
 Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
-ComentarioSimple = ("--")[^\r\n]*([\r\n]?)
+ComentarioSimple = ("--")[^\r\n]*
 ComentarioMultilinea = "/*"~"*/"
-ComentarioMultilineaError = "/*"
-String = ("'")[^\r\n]*("'")
-StringError = ("'")[^'\r\n]*([\r\n]?)
+ComentarioMultilineaError = "/*"[^\r\n]*
+String = ("'")[^'\r\n]*("'")
+StringError = ("'")[^'\r\n]*
 
 
 %{
@@ -106,7 +106,7 @@ DROP | OPEN | WHERE | ELSE | OPTION | WITH | END | OR | WORK |
 END-EXEC | ORDER | WRITE | ESCAPE | OUTER | YEAR | EXCEPT | OUTPUT | ZONE |
 EXCEPTION {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn +1; UltimaColumna=yycolumn+yylength(); return Palabra_Reservada;}
 
-{Identificador} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn +1 ; UltimaColumna=yycolumn+yylength(); return Identificador;}
+{Identificador} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn +1 ; UltimaColumna=yycolumn+yylength(); return Identificador;}
 {Bit} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Bit;}
 {Digito} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Int;}
 {Float} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Float;}
