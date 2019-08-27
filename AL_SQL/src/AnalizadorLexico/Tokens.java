@@ -21,5 +21,6 @@ public enum Tokens {
     String,
     StringError,
     ComentarioMultilinea,
+    ComentarioMultilineaError,
     ERROR
 }
