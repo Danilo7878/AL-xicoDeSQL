@@ -27,7 +27,7 @@ OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
 Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
 ComentarioSimple = ("--")[^\r\n]*
 ComentarioMultilinea = "/*"~"*/"
-ComentarioMultilineaError = ("/*")([^"*/"])*
+ComentarioMultilineaError = "/*"
 StringError = ("'")[^\r\n]*
 String = "'"~("'\n"|"'\r"|"'\r\n")
 
