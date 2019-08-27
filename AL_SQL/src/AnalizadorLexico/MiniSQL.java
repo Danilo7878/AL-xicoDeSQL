@@ -5,6 +5,7 @@
  */
 package AnalizadorLexico;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,7 +32,7 @@ public class MiniSQL extends javax.swing.JFrame {
     
     public MiniSQL() {
         initComponents();
-        //btn_Escanear.setVisible(false);
+        txtArea_Errores.setForeground(Color.red);
     }
 
     /**
@@ -158,11 +159,13 @@ public class MiniSQL extends javax.swing.JFrame {
             String[] fichero_extension = PathSQL.split(Pattern.quote("."));
             String NewPath = fichero_extension[0].concat(".out");
             PrintWriter escribir = new PrintWriter(new File(NewPath));
+            String errores = "";
             
             while (true) {
             Tokens token = lexer.yylex();
                 if (token == null) {
-                    //cerrar el archivo.out   
+                    //cerrar el archivo.out 
+                    txtArea_Errores.setText(errores);
                     escribir.flush();
                     escribir.close();
                     return;                                     
@@ -170,25 +173,32 @@ public class MiniSQL extends javax.swing.JFrame {
                 
                 //seleccionar el tipo de Token
                 switch (token) {
-                    case Palabra_Reservada: case Float: case Bit: case Int: case Simbolo:
+                    case Palabra_Reservada: case Float: case Bit: case Int: case Simbolo: case ComentarioSimple:
                         escribir.println("Token: "+ token+ "|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
-                        + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna);
+                        + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna);
                         break;
                     case Identificador:
                         if (lexer.yylength() > 31) {
                             String TokenTruncado = lexer.lexeme.substring(0, 30);
+                            
                             escribir.println("Token: "+ token+ "|Valor: " + TokenTruncado + "|Linea: " + lexer.linea
-                            + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna 
+                            + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna 
                             + "|ALERTA: Indentificador Truncado");
+                            
+                            errores += "ALERTA: Indentificador Truncado|Valor: " + TokenTruncado + "|Linea: " + lexer.linea
+                            + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna + "\n";
                         }
                         else{
                         escribir.println("Token: "+ token+ "|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
-                        + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna);
+                        + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna);
                         }
                         break;
                     case FloatError:
                         escribir.println("FLOAT ERROR: cadena no válida para el tipo de dato|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
-                        + "|ColumnaInicio: " + lexer.PrimeraColumna + "|ColumnaFin: " + lexer.UltimaColumna);
+                        + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna);
+                        
+                        errores+= "FLOAT ERROR: cadena no válida para el tipo de dato|Valor: " + lexer.lexeme + "|Linea: " + lexer.linea
+                                  + "|Columna Inicio: " + lexer.PrimeraColumna + "|Columna Fin: " + lexer.UltimaColumna + "\n";                        
                         break;
                     case ERROR:
                         escribir.println("ERROR: cadena no válida en el lenguaje");

@@ -11,7 +11,6 @@ Letra = [a-zA-Z]+
 LetraOguion = [a-zA-Z_]+
 Digito = [0-9]+
 espacio = [ ,\t,\r,\n]+
-FinDeLinea = [\r,\n]+ 
 Exponente = [eE]
 Bit = [0-1]|"NULL"
 Signo = [+-]?
@@ -26,7 +25,7 @@ OperadorLogico = "<"|"<="|">"|">="|"=="|"!="|"&&"|"||"
 SignoDePuntuacion = "!"|";"|","|"."
 OtroSimbolo = "["|"]"|"[]"|"("|")"|"{"|"}"|"()"|"{}"|"@"|"#"|"##"
 Simbolo = {OperadorAritmetico} | {OperadorLogico} | {SignoDePuntuacion} | {OtroSimbolo}
-
+ComentarioSimple = ("--")[^\r\n]*
 
 %{
 public String lexeme;
@@ -100,17 +99,20 @@ DIAGNOSTICS | NUMERIC | VARCHAR | DISCONNECT | OCTET_LENGTH | VARYING |
 DISTINCT | OF | VIEW | DOMAIN | ON | WHEN | DOUBLE | ONLY | WHENEVER |
 DROP | OPEN | WHERE | ELSE | OPTION | WITH | END | OR | WORK |
 END-EXEC | ORDER | WRITE | ESCAPE | OUTER | YEAR | EXCEPT | OUTPUT | ZONE |
-EXCEPTION {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Palabra_Reservada;}
+EXCEPTION {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn +1; UltimaColumna=yycolumn+yylength(); return Palabra_Reservada;}
 
-{Identificador} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Identificador;}
+{Identificador} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn +1 ; UltimaColumna=yycolumn+yylength(); return Identificador;}
 
-{Bit} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Bit;}
+{Bit} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Bit;}
 
-{Digito} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Int;}
+{Digito} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Int;}
 
-{Float} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Float;}
+{Float} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Float;}
 
-{FloatError1} | {FloatError2} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return FloatError;}
+{FloatError1} | {FloatError2} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return FloatError;}
 
-{Simbolo} {lexeme=yytext(); linea=yyline; PrimeraColumna=yycolumn; UltimaColumna=yycolumn+yylength()-1; return Simbolo;} 
+{Simbolo} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return Simbolo;}
+ 
+{ComentarioSimple} {lexeme=yytext(); linea=yyline + 1; PrimeraColumna=yycolumn + 1; UltimaColumna=yycolumn+yylength(); return ComentarioSimple;}
+
  . {return ERROR;}
