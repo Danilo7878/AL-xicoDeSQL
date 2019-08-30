@@ -46,3 +46,13 @@ caracteres cualesquiera y finalizado por * y /
 no existiría
 - En cambio un /* por sí solo si es tomado como una expresión aparte, pues al no contener un cierre de comentario, no cumple con la expresión regular anterior, por lo que esos caracteres por sí solos representan el error de comentario sin cerrar. De ese mismo modo se puede seguir analizando las cadenas que vengan después de este.
 
+#Recordatorio
+- únicamente para acordarme de lo que debo corregir en un futuro
+
+No tomar en cuenta los casos específicos de error en los "FLOAT"
+- ejemplo:
+.12E123 al no corresponder a la expresión regular de float, debe separarlo en <.> símbolo, <12> int, <E123> Identifiador.
+  
+  
+
+
